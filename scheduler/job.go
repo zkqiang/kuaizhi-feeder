@@ -20,7 +20,8 @@ func getJob(token string) *model.Job {
 	}
 	defer res.Body.Close()
 	if res.StatusCode != 200 {
-		log.Fatalf("get job status error: %d %s", res.StatusCode, res.Status)
+		log.Errorf("get job status error: %d %s", res.StatusCode, res.Status)
+		return nil
 	}
 	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
