@@ -32,7 +32,13 @@ func Feed(source enum.Source) bool {
 	}
 	cards := crawl(source)
 	if cards == nil {
-		log.Debugf("crawl zero card from %s", source)
+		log.Errorf("crawl zero card from %s", source)
+		return false
+	}
+	card := cache.Card.Get(jobId)
+	if card != nil && (*cards)[0].Url == card.Url {
+		log.Debugf("have no new card "+
+			"from token %s, jobId %s", token, jobId)
 		return false
 	}
 	cache.Feed.Set(source, cards)

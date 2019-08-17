@@ -53,7 +53,6 @@ func postJob(token string, jobId string, cards *[]model.Card) {
 		log.Errorf("post job token-%s id-%s error: %s", token, jobId, err)
 		return
 	}
-	fmt.Print(string(formBytes), url)
 	res, err := http.Post(url, "application/json", bytes.NewBuffer(formBytes))
 	if err != nil {
 		log.Errorf("post job token-%s id-%s error: %s", token, jobId, err)
