@@ -32,7 +32,7 @@ func CrawlYouyanshe(page int) (*[]model.Card, error) {
 			"response code error: %s", code))
 	}
 	var cards []model.Card
-	re, _ := regexp.Compile("[\n\t]")
+	pattern, _ := regexp.Compile("[\n\t]")
 	for _, data := range gjson.Get(doc.Text(), "data").Array() {
 		postData := data.Get("data")
 		text := postData.Get("text").String()
@@ -40,11 +40,11 @@ func CrawlYouyanshe(page int) (*[]model.Card, error) {
 			text = postData.Get("preface").String()
 		}
 		card := model.Card{
-			Images: []string{postData.Get("cover").String()},
-			Title:  re.ReplaceAllString(postData.Get("title").String(), ""),
-			Text:   re.ReplaceAllString(text, ""),
-			Url:    "https://www.yystv.cn/p/" + postData.Get("id").String(),
-			Video:  "",
+			//Images: []string{postData.Get("cover").String()},
+			//Title:  pattern.ReplaceAllString(postData.Get("title").String(), ""),
+			Text:  pattern.ReplaceAllString(text, ""),
+			Url:   "https://www.yystv.cn/p/" + postData.Get("id").String(),
+			Video: "",
 		}
 		cards = append(cards, card)
 	}
