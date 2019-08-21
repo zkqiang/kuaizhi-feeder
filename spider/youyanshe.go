@@ -12,7 +12,7 @@ import (
 )
 
 func CrawlYouyanshe(page int) (*[]model.Card, error) {
-	url := "https://www.yystv.cn/app/home/get_home_feeds_by_page?page=" + strconv.Itoa(page)
+	url := "https://www.yystv.cn/app/home/get_home_feeds_by_page?article_only=1&page=" + strconv.Itoa(page)
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
